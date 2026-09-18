@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run
 # /// script
 # dependencies = [
-#    "earthkit-workflows>=0.9.0",
+#    "earthkit-workflows==0.15.6",
 #    "earthkit-workflows-anemoi>=0.7.2",
 #    "qubed",
 #    "anemoi-inference",
