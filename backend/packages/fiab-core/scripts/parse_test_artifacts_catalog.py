@@ -108,15 +108,12 @@ def validate_anemoi_model(artifact_id: CompositeArtifactId, artifact: ArtifactRe
     if not configuration.nested_model:
         return None
 
-    if configuration.region_of_interest is None:
-        return f"{artifact_id=}: nested models must specify a region of interest"
     if not isinstance(configuration.input_options, list):
         return f"{artifact_id=}: nested models must specify input options as a list"
-    regions = [next(iter(region)) for region in configuration.input_options]
-    if not configuration.region_of_interest in regions:
-        return (
-            f"{artifact_id=}: mismatch in regions of interest: {configuration.region_of_interest=} is not in {configuration.input_options=}"
-        )
+    if configuration.region_of_interest is not None:
+        regions = [next(iter(region)) for region in configuration.input_options]
+        if not configuration.region_of_interest in regions:
+            return f"{artifact_id=}: mismatch in regions of interest: {configuration.region_of_interest=} is not in {configuration.input_options=}"
 
     return None
 

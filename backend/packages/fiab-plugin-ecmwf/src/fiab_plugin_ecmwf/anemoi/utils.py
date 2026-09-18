@@ -155,19 +155,28 @@ class CheckpointArtifact:
         if configuration.post_processors is not None:
             post_processors.extend(configuration.post_processors)
 
-        # Add post processor to extract region of interest for nested models with cutout input
+        # Nested models must specify input options as a list of region configurations (for
+        # cutout input construction, see get_input_configuration below).
+        #
+        # region_of_interest is optional. If set, it opts into cropping the model output down
+        # to that region via anemoi-inference's `extract_from_state` post processor. Note that
+        # post processor is currently broken across multi-step autoregressive runs, raising an
+        # IndexError from the second lead time step onwards, so setting region_of_interest will
+        # trigger that bug until it is fixed upstream (or region-of-interest cropping is
+        # implemented as a separate step outside anemoi-inference). Leaving it unset is safe:
+        # the model output is then left uncropped, covering the full combined cutout grid (all
+        # regions in input_options).
         if configuration.nested_model:
-            if configuration.region_of_interest is None:
-                raise ValueError("Nested models must specify a region of interest in the checkpoint configuration")
             if not configuration.input_options or not isinstance(configuration.input_options, list):
                 raise ValueError(
                     "Nested models must specify input options as a list of region configurations in the checkpoint configuration"
                 )
-            if not configuration.region_of_interest in [next(iter(region.keys())) for region in configuration.input_options]:
-                raise ValueError(
-                    f"Region of interest {configuration.region_of_interest} must be one of the regions specified in input options {[next(iter(region.keys())) for region in configuration.input_options]}"
-                )
-            post_processors.append({"extract_from_state": configuration.region_of_interest})
+            if configuration.region_of_interest is not None:
+                if not configuration.region_of_interest in [next(iter(region.keys())) for region in configuration.input_options]:
+                    raise ValueError(
+                        f"Region of interest {configuration.region_of_interest} must be one of the regions specified in input options {[next(iter(region.keys())) for region in configuration.input_options]}"
+                    )
+                post_processors.append({"extract_from_state": configuration.region_of_interest})
 
         return {
             "post_processors": post_processors,

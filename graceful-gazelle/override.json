@@ -25,8 +25,7 @@
           }
         }
       ],
-      "nested_model": true,
-      "region_of_interest": "lam_0"
+      "nested_model": true
     }
   }
 }
