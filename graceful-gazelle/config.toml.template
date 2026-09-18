@@ -1,0 +1,11 @@
+[external.artifact_stores.ecmwf]
+url = "https://raw.githubusercontent.com/ecmwf/forecast-in-a-box/refs/tags/${TAG}/install/artifacts.json"
+method = "gittag"
+
+[external.artifact_stores.local]
+url = "file://${CONFIG_LOCATION}"
+method = "file"
+
+[cascade.constraints]
+custom_pip_indices = ["https://download.pytorch.org/whl/cu129"]
+default_workers_per_host = 1

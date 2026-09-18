@@ -1,0 +1,32 @@
+{
+  "common": {
+    "url": "file:///home/vegardb/src/share/graceful-gazelle_inference_step10000.ckpt",
+    "display_name": "Graceful Gazelle (local test)",
+    "display_author": "local",
+    "display_description": "Locally tested checkpoint, not for production use"
+  },
+  "specific": {
+    "pip_package_constraints": [
+      "anemoi.models==0.18.0",
+      "torch==2.8.0+cu129",
+      "torch_geometric==2.8.0.post1"
+    ],
+    "configuration": {
+      "input_options": [
+        {
+          "lam_0": {
+            "grid": "O1280",
+            "area": [40, -25, -40, 55]
+          }
+        },
+        {
+          "global": {
+            "grid": "N320"
+          }
+        }
+      ],
+      "nested_model": true,
+      "region_of_interest": "lam_0"
+    }
+  }
+}
