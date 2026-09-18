@@ -499,6 +499,39 @@ class GribSink(Sink):
         return bool(dimensions(other))
 
 
+class DummySink(Sink):
+    title: str = "Dummy Sink"
+    description: str = "Does nothing but produce a JSON summary of its input - useful for testing"
+    configuration_options: dict[ConfigurationOptionId, BlockConfigurationOption] = {}
+    inputs: list[str] = ["dataset"]
+
+    def validate(
+        self, block: BlockInstanceRich, inputs: dict[str, QubedOutput], restrictions: ConfigurationOptionRestriction
+    ) -> BlockInstanceOutput:
+        _extract_dataset(inputs, "dataset")  # check format of input and existence of dataset
+        return RawOutput(type_fqn="bytes", mime_type="application/json")
+
+    def compile(
+        self,
+        inputs: ActionLookup,
+        block: BlockInstanceRich,
+    ) -> Either[Action, Error]:  # type:ignore[invalid-argument] # semigroup
+        input_task = block.input_ids["dataset"]
+
+        temp_dim = nodetree_new_dimension(inputs[input_task].nodes)
+        action = (
+            inputs[input_task]
+            .flatten(new_dim=temp_dim, reset_coords=True)
+            .combine_branches(dim=temp_dim)
+            .concatenate(dim=temp_dim)
+            .map(Payload("fiab_plugin_ecmwf.runtime.sinks.log_dataset"))
+        )
+        return Either.ok(action)
+
+    def intersect(self, other: QubedOutput) -> bool:
+        return bool(dimensions(other))
+
+
 class MapPlotSink(Sink):
     title: str = "Map Plot"
     description: str = "Render a geographic map using earthkit-plots"

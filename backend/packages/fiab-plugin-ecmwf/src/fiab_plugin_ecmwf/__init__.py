@@ -16,6 +16,7 @@ from fiab_core.tools.plugins import QubedPluginBuilder
 
 from fiab_plugin_ecmwf.anemoi.blocks import AnemoiInputSource, AnemoiSource, AnemoiTransform
 from fiab_plugin_ecmwf.blocks import (
+    DummySink,
     EnsembleStatistics,
     GribSink,
     MapPlotSink,
@@ -35,6 +36,7 @@ blocks: dict[BlockFactoryId, QubedBlockBuilder] = {
     BlockFactoryId("select"): Select(),
     BlockFactoryId("zarrSink"): ZarrSink(),
     BlockFactoryId("gribSink"): GribSink(),
+    BlockFactoryId("dummySink"): DummySink(),
     BlockFactoryId("anemoiSource"): AnemoiSource(),
     BlockFactoryId("anemoiInputSource"): AnemoiInputSource(),
     BlockFactoryId("anemoiTransform"): AnemoiTransform(),
