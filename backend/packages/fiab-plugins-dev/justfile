@@ -1,0 +1,9 @@
+val:
+    uv run ty check src tests
+    just test
+
+test:
+    uv run pytest
+
+build:
+    python -m build --installer uv .

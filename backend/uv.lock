@@ -25,6 +25,7 @@ members = [
     "fiab-plugin-demo",
     "fiab-plugin-ecmwf",
     "fiab-plugin-test",
+    "fiab-plugins-dev",
     "forecast-in-a-box",
 ]
 
@@ -1622,6 +1623,35 @@ dev = [
 
 [package.metadata]
 requires-dist = [{ name = "fiab-core", editable = "packages/fiab-core" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "ty", specifier = "==0.0.2" }]
+
+[[package]]
+name = "fiab-plugins-dev"
+source = { editable = "packages/fiab-plugins-dev" }
+dependencies = [
+    { name = "earthkit-workflows", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
+    { name = "fiab-core", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
+]
+
+[package.optional-dependencies]
+runtime = [
+    { name = "earthkit-data", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "ty", marker = "sys_platform == 'darwin' or sys_platform == 'linux'" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "earthkit-data", marker = "extra == 'runtime'", specifier = ">=0.18.2" },
+    { name = "earthkit-workflows", specifier = ">=0.14.1,<1.0.0" },
+    { name = "fiab-core", editable = "packages/fiab-core" },
+]
+provides-extras = ["runtime"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "ty", specifier = "==0.0.2" }]
