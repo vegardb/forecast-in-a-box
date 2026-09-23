@@ -47,6 +47,9 @@ dependencies = [
   "toml",
   "uvicorn",
   "websockets",
+  "ecmwflibs==0.7.1",
+  "skinnywms>=0.13.0",
+  "magics>=1.5.8",
 ]
 
 urls."Source code" = "https://github.com/ecmwf/forecast-in-a-box"
