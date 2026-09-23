@@ -6,6 +6,9 @@ method = "gittag"
 url = "file://${CONFIG_LOCATION}"
 method = "file"
 
+# [external.artifact_stores.arcx]
+# url = "https://sites.ecmwf.int/repository/fiab/arcx/artifacts/5.2.json"
+# method = "file"
+
 [cascade.constraints]
-custom_pip_indices = ["https://download.pytorch.org/whl/cu129"]
 default_workers_per_host = 1
