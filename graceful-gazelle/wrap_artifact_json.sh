@@ -27,13 +27,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 uv run "$SCRIPT_DIR/../backend/packages/fiab-plugin-ecmwf/scripts/get_metadata_from_anemoi.py" "$CHECKPOINT" > "$ENTRY_JSON"
 
 export CONFIG_LOCATION="$SCRIPT_DIR/graceful_gazelle.json"
+CHECKPOINT_URL="file://$(realpath "$CHECKPOINT")"
 
 jq -n \
   --arg display_name "$DISPLAY_NAME" \
   --arg key "$ARTIFACT_KEY" \
+  --arg checkpoint_url "$CHECKPOINT_URL" \
   --slurpfile entry "$ENTRY_JSON" \
   --argjson override "$OVERRIDE_CONTENT" \
-  '{display_name: $display_name, artifacts: {($key): ($entry[0] * $override)}}' \
+  '{display_name: $display_name, artifacts: {($key): ($entry[0] * $override * {common: {url: $checkpoint_url}})}}' \
   > "$CONFIG_LOCATION"
 
 # cat "$SCRIPT_DIR/config.toml.template" | envsubst > "$SCRIPT_DIR/config.toml"
