@@ -1,0 +1,14 @@
+[external.artifact_stores.ecmwf]
+url = "https://raw.githubusercontent.com/ecmwf/forecast-in-a-box/refs/tags/${TAG}/install/artifacts.json"
+method = "gittag"
+
+[external.artifact_stores.local]
+url = "file://${CONFIG_LOCATION}"
+method = "file"
+
+# [external.artifact_stores.arcx]
+# url = "https://sites.ecmwf.int/repository/fiab/arcx/artifacts/5.2.json"
+# method = "file"
+
+[cascade.constraints]
+default_workers_per_host = 1
