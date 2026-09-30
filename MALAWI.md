@@ -5,51 +5,31 @@ constant_in_time for z og lsm
 uv pip install --target backend/.fiab/tools/ptxas-cu129   --index-strategy unsafe-best-match   "nvidia-cuda-nvcc-cu12==12.9.86"
 
 
-## Actually worked
+## Actually works
 
 ```bash
-rm -rf backend/.fiab/
-rm -rf backend/.venv
-just dev
-cd graceful-gazelle/
-ll
-./wrap_artifact_json.sh ~/src/graceful-gazelle_r4_inference_step18000-harrison.ckpt
-cp config.toml ../backend/.fiab/
-cd ..
-just dev
-./run.sh
-cd backend/
-uv pip install --target .fiab/tools/ptxas-cu129   --index-strategy unsafe-best-match   "nvidia-cuda-nvcc-cu12==12.9.86"
-cd --
-cd -
-cd ..
-./run.sh
-```
-
-## Experiment
-
-```bash
-rm -rf backend/.fiab/ backend/.venv
-just dev
+git clone git@github.com:vegardb/forecast-in-a-box.git
+cd forecast-in-a-box
+git checkout malawi
+mkdir -p backend/.fiab/data_dir
 cd graceful-gazelle/
 ./wrap_artifact_json.sh ~/src/graceful-gazelle_r4_inference_step18000-harrison.ckpt
 cp config.toml ../backend/.fiab/
-cd ../backend/
-uv pip install --target .fiab/tools/ptxas-cu129   --index-strategy unsafe-best-match   "nvidia-cuda-nvcc-cu12==12.9.86"
 cd ..
+uv pip install --target backend/.fiab/tools/ptxas-cu129   --index-strategy unsafe-best-match   "nvidia-cuda-nvcc-cu12==12.9.86"
 ./run.sh
 ```
 
-Av en eller annen grunn virker ikke wms når filer havner i /tmp
-* Årsak: en tilfeldig grib-fil velges for visning
+On oldes installs, maybe remove `backend/.fiab/` and `backend/.venv` first.
 
 
-Siste versjon av anemoi-inference trengs?
+Will need a late version of anemoi-inference?
+* Wrapping around zero meridian
 
-WMS: Grib-filer må inn i egen folder - en for hver run. Bruk simulation-id.
+WMS: GRIB files must go into their own folder — one per run. Use the simulation ID.
 
 
 
 ## Bugs
 
-* Hvis checkpoint ikke fins når det lastes ned, så får man ingen feilmelding.
+* If the checkpoint does not exist when it is downloaded, no error message is shown.
