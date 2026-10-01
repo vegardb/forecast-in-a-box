@@ -9,7 +9,8 @@
       "anemoi.models==0.18.0",
       "torch==2.8.0+cu129",
       "torch_geometric==2.8.0.post1",
-      "anemoi-plugins-ecmwf-inference[mir]"
+      "anemoi-plugins-ecmwf-inference[mir]",
+      "git+https://github.com/ecmwf/anemoi-inference.git@6d85213b49bb5256a018d9c618a8d5401bf58fb7"
     ],
     "configuration": {
       "input_options": [
@@ -25,6 +26,13 @@
           }
         }
       ],
+      "global_pre_processors": [
+        {"coordinate_reorder": {}}
+      ],
+      "post_processors": [
+        {"coordinate_reorder": {}}
+      ],
+
       "nested_model": true,
       "region_of_interest": "lam_0"
     }
