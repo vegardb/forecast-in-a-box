@@ -20,7 +20,7 @@ uv pip install --target backend/.fiab/tools/ptxas-cu129   --index-strategy unsaf
 ./run.sh
 ```
 
-On oldes installs, maybe remove `backend/.fiab/` and `backend/.venv` first.
+On old installs, maybe remove `backend/.fiab/` and `backend/.venv` first.
 
 
 Will need a late version of anemoi-inference?
@@ -33,3 +33,7 @@ WMS: GRIB files must go into their own folder — one per run. Use the simulatio
 ## Bugs
 
 * If the checkpoint does not exist when it is downloaded, no error message is shown.
+
+
+https://bris-fiab.k8s.met.no/model-repo/
+https://gitlab.met.no/team-punkt/bris4all/fiab-docker
