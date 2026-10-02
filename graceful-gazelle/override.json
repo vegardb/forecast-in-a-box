@@ -26,7 +26,7 @@
           }
         }
       ],
-      "global_pre_processors": [
+      "pre_processors": [
         {"coordinate_reorder": {}}
       ],
       "post_processors": [
